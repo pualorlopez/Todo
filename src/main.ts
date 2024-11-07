@@ -1,5 +1,6 @@
-import './style.css';
+import './style.css'
 
+// Estructura básica de HTML para la lista de tareas
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div class="app">
     <h1>Todo List</h1>
@@ -7,8 +8,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <button id="add-task">Add Task</button>
     <ul id="task-list"></ul>
   </div>
-`;
+`
 
+// Define la estructura de una tarea
 interface Task {
   id: number;
   text: string;
@@ -18,12 +20,14 @@ interface Task {
 let tasks: Task[] = [];
 let taskIdCounter = 1;
 
+// Elementos del DOM
 const taskInput = document.getElementById('new-task') as HTMLInputElement;
 const addButton = document.getElementById('add-task') as HTMLButtonElement;
 const taskList = document.getElementById('task-list') as HTMLUListElement;
 
+// Renderiza la lista de tareas
 function renderTasks() {
-  taskList.innerHTML = '';
+  taskList.innerHTML = ''; 
   tasks.forEach((task) => {
     const taskItem = document.createElement('li');
     taskItem.className = task.completed ? 'completed' : '';
@@ -46,6 +50,7 @@ function renderTasks() {
   });
 }
 
+// Función para añadir una nueva tarea
 function addTask() {
   const taskText = taskInput.value.trim();
   if (taskText) {
@@ -60,11 +65,13 @@ function addTask() {
   }
 }
 
+// Función para eliminar una tarea
 function deleteTask(id: number) {
   tasks = tasks.filter((task) => task.id !== id);
   renderTasks();
 }
 
+// Alterna el estado de completado de una tarea
 function toggleTaskCompletion(id: number) {
   const task = tasks.find((task) => task.id === id);
   if (task) {
@@ -73,6 +80,7 @@ function toggleTaskCompletion(id: number) {
   }
 }
 
+// Eventos para agregar tareas
 addButton.addEventListener('click', addTask);
 taskInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
@@ -80,4 +88,5 @@ taskInput.addEventListener('keypress', (e) => {
   }
 });
 
+// Render inicial de la lista de tareas
 renderTasks();
